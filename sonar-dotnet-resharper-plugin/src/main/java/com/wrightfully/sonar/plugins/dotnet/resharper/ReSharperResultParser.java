@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
 import org.sonar.api.BatchExtension;
 import org.sonar.api.batch.SensorContext;
 import org.sonar.api.resources.Project;
-import org.sonar.api.resources.Resource;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.rules.RuleQuery;
@@ -116,7 +115,7 @@ public class ReSharperResultParser implements BatchExtension {
                 if (nodeName.equals("Issues")) {
                     parseIssuesBloc(mainCursor, missingTypesHelper);
                 } else if (nodeName.equals("IssueTypes")) {
-                    missingTypesHelper.setInputCursor(mainCursor);
+                    missingTypesHelper.setIssueTypes(mainCursor);
                 }
             }
 
@@ -147,7 +146,7 @@ public class ReSharperResultParser implements BatchExtension {
             _missingIssueTypes = new HashSet<String>();
         }
 
-        public void setInputCursor(SMInputCursor issuesTypeCursor) throws XMLStreamException {
+        public void setIssueTypes(SMInputCursor issuesTypeCursor) throws XMLStreamException {
             SMInputCursor _issueTypeCursor = issuesTypeCursor.childElementCursor("IssueType");
             LOG.debug("Parsing IssueTypes");
             while (_issueTypeCursor.getNext() != null){
