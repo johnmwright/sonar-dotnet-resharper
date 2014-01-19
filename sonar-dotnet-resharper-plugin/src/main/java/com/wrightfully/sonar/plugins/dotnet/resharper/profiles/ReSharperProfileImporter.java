@@ -82,8 +82,9 @@ public class ReSharperProfileImporter extends ProfileImporter {
         List<ReSharperRule> rules = ReSharperFileParser.parseRules(reader, messages);
 
         for (ReSharperRule reSharperRule : rules) {
-            String ruleName = reSharperRule.getId();
-            Rule rule = ruleFinder.find(RuleQuery.create().withRepositoryKey(getKey()).withKey(ruleName));
+        	String ruleName = reSharperRule.getId();
+            String ruleKey = reSharperRule.getKey();
+            Rule rule = ruleFinder.find(RuleQuery.create().withRepositoryKey(getKey()).withKey(ruleKey));
 
             if (rule != null) {
                 RulePriority sonarPriority = reSharperRule.getSonarPriority();

@@ -88,7 +88,7 @@ public class ReSharperProfileImporterTest {
         assertThat(messages.hasWarnings()).isFalse();
         assertThat(messages.hasErrors()).isFalse();
 
-        assertThat(profile.getActiveRules().size()).isEqualTo(3);
+        assertThat(profile.getActiveRules().size()).isEqualTo(4);
 
         ActiveRule cniRule = profile.getActiveRuleByConfigKey(ReSharperConstants.REPOSITORY_KEY+"-cs",
                 "ReSharperInspectCode#ClassNeverInstantiated.Global");
@@ -128,24 +128,36 @@ public class ReSharperProfileImporterTest {
             public Rule answer(InvocationOnMock iom) throws Throwable {
                 RuleQuery query = (RuleQuery) iom.getArguments()[0];
                 Rule rule = null;
-                if (StringUtils.equals(query.getConfigKey(), "ReSharperInspectCode#ClassNeverInstantiated.Global")
-                        || StringUtils.equals(query.getKey(), "ClassNeverInstantiated.Global")) {
+                String configKey=query.getConfigKey();
+                String ruleKey=query.getKey();
+                if (StringUtils.equals(configKey, "ReSharperInspectCode#ClassNeverInstantiated.Global")
+                        || StringUtils.equals(ruleKey, "ClassNeverInstantiated.Global")) {
                     rule = Rule.create(query.getRepositoryKey(), "ClassNeverInstantiated.Global", "ClassNeverInstantiated.Global")
                             .setDescription("Class is never instantiated: Non-private accessibility<br />(Category: Potential Code Quality Issues)")
                             .setConfigKey("ReSharperInspectCode#ClassNeverInstantiated.Global");
 
-                } else if (StringUtils.equals(query.getConfigKey(), "ReSharperInspectCode#ClassWithVirtualMembersNeverInherited.Global")
-                        || StringUtils.equals(query.getKey(), "ClassWithVirtualMembersNeverInherited.Global")) {
+                } else if (StringUtils.equals(configKey, "ReSharperInspectCode#ClassWithVirtualMembersNeverInherited.Global")
+                        || StringUtils.equals(ruleKey, "ClassWithVirtualMembersNeverInherited.Global")) {
                     rule = Rule.create(query.getRepositoryKey(), "ClassWithVirtualMembersNeverInherited.Global", "ClassWithVirtualMembersNeverInherited.Global")
                             .setDescription("Class with virtual(overridable) members never inherited: Non-private accessibility<br />(Category: Redundancies in Symbol Declarations)")
                             .setConfigKey("ReSharperInspectCode#ClassWithVirtualMembersNeverInherited.Global");
 
-                } else if (StringUtils.equals(query.getConfigKey(), "ReSharperInspectCode#MemberCanBeMadeStatic.Global")
-                        || StringUtils.equals(query.getKey(), "MemberCanBeMadeStatic.Global")) {
+                } else if (StringUtils.equals(configKey, "ReSharperInspectCode#MemberCanBeMadeStatic.Global")
+                        || StringUtils.equals(ruleKey, "MemberCanBeMadeStatic.Global")) {
                     rule = Rule.create(query.getRepositoryKey(), "MemberCanBeMadeStatic.Global", "MemberCanBeMadeStatic.Global")
                             .setDescription("Member can be made static(shared): Non-private accessibility<br />(Category: Common Practices and Code Improvements)")
                             .setConfigKey("ReSharperInspectCode#MemberCanBeMadeStatic.Global");
 
+                } else if (StringUtils.equals(configKey, "ReSharperInspectCode#MemberCanBeMadeStatic.Global")
+                        || StringUtils.equals(ruleKey, "MemberCanBeMadeStatic.Global")) {
+                    rule = Rule.create(query.getRepositoryKey(), "MemberCanBeMadeStatic.Global", "MemberCanBeMadeStatic.Global")
+                            .setDescription("Member can be made static(shared): Non-private accessibility<br />(Category: Common Practices and Code Improvements)")
+                            .setConfigKey("ReSharperInspectCode#MemberCanBeMadeStatic.Global");
+                } else if (StringUtils.equals(configKey, "ReSharperInspectCode#CSharpWarnings::CS0162")
+                            || StringUtils.equals(ruleKey, "CSharpWarnings__CS0162")) {
+                        rule = Rule.create(query.getRepositoryKey(), "CSharpWarnings__CS0162", "CSharpWarnings::CS0162")
+                                .setDescription("CS0162:Code is unreachable(Category: Compiler Warnings)")
+                                .setConfigKey("ReSharperInspectCode#CSharpWarnings::CS0162");
                 }
                 return rule;
             }

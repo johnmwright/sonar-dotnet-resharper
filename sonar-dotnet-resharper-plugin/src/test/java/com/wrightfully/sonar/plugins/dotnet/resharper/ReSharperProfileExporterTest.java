@@ -79,7 +79,9 @@ public class ReSharperProfileExporterTest {
         profile.activateRule(Rule.create(ReSharperConstants.REPOSITORY_KEY+"-cs", "MemberCanBeMadeStatic.Global", "MemberCanBeMadeStatic.Global")
                 .setDescription("Member can be made static(shared): Non-private accessibility<br />(Category: Common Practices and Code Improvements)")
                 .setConfigKey("ReSharperInspectCode#MemberCanBeMadeStatic.Global"), RulePriority.INFO);
-
+        profile.activateRule(Rule.create(ReSharperConstants.REPOSITORY_KEY+"-cs", "CSharpWarnings::CS0162", "CSharpWarnings::CS0162")
+                .setDescription("CS0162:Code is unreachable<br />(Category: Compiler Warnings)")
+                .setConfigKey("ReSharperInspectCode#CSharpWarnings::CS0162"), RulePriority.INFO);
         StringWriter writer = new StringWriter();
         ReSharperProfileExporter exporter = new ReSharperProfileExporter.CSharpRegularReSharperProfileExporter();
         assertThat(exporter.getKey()).isEqualTo("resharper-cs");

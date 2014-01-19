@@ -235,15 +235,15 @@ public class ReSharperResultParser implements BatchExtension {
         while (issuesCursor.getNext() != null) {
 
             String typeId = issuesCursor.getAttrValue("TypeId");
-            String ruleKey = "ReSharperInspectCode#" + typeId;
+            String configRuleKey = "ReSharperInspectCode#" + typeId;
 
-            LOG.debug("Searching for rule '"+ruleKey+"' in repository '" + repositoryKey +"'");
-            Rule currentRule = ruleFinder.find(RuleQuery.create().withRepositoryKey(repositoryKey).withConfigKey(ruleKey));
+            LOG.debug("Searching for rule '"+configRuleKey+"' in repository '" + repositoryKey +"'");
+            Rule currentRule = ruleFinder.find(RuleQuery.create().withRepositoryKey(repositoryKey).withConfigKey(configRuleKey));
             if (currentRule != null) {
-                LOG.debug("Rule found: " + ruleKey);
+                LOG.debug("Rule found: " + configRuleKey);
                 createViolation(issuesCursor, currentRule);
             } else {
-                LOG.warn("Could not find the following rule in the ReSharper rule repository: " + ruleKey);
+                LOG.warn("Could not find the following rule in the ReSharper rule repository: " + configRuleKey);
                 missingTypesHelper.addMissingIssueType(typeId);
             }
         }

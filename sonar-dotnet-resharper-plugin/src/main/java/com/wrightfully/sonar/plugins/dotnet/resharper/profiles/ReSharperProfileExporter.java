@@ -97,10 +97,11 @@ public class ReSharperProfileExporter extends ProfileExporter {
         //                   Description="Class is never instantiated: Non-private accessibility"
         //                   Severity="SUGGESTION" />
 
-
+ 
         writer.append("    <IssueType");
         writer.append(" Id=\"");
         StringEscapeUtils.escapeXml(writer, resharperRule.getId());
+        
         writer.append("\" Enabled=\"");
         StringEscapeUtils.escapeXml(writer, String.valueOf(resharperRule.isEnabled()));
 

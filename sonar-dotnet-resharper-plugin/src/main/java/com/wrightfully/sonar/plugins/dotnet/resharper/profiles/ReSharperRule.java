@@ -273,7 +273,7 @@ public class ReSharperRule {
         }
 
         Rule sonarRule = Rule.create()
-                .setKey(getId())
+                .setKey(getKey())
                 .setName(getId())
                 .setConfigKey("ReSharperInspectCode#" + getId())
                 .setDescription(desc)
@@ -311,6 +311,10 @@ public class ReSharperRule {
         }
 
         return resharperRule;
+    }
+    
+    public String getKey() {
+    	return getId().replaceAll(":", "_");
     }
 
 }

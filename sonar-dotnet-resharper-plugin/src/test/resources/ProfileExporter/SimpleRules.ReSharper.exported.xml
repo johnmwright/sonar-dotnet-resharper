@@ -4,5 +4,6 @@
         <IssueType Id="ClassNeverInstantiated.Global" Enabled="true" Description="Class is never instantiated: Non-private accessibility&lt;br /&gt;(Category: Potential Code Quality Issues)" Severity="SUGGESTION" />
         <IssueType Id="ClassWithVirtualMembersNeverInherited.Global" Enabled="true"  Description="Class with virtual(overridable) members never inherited: Non-private accessibility&lt;br /&gt;(Category: Redundancies in Symbol Declarations)" Severity="SUGGESTION" />
         <IssueType Id="MemberCanBeMadeStatic.Global" Enabled="true" Description="Member can be made static(shared): Non-private accessibility&lt;br /&gt;(Category: Common Practices and Code Improvements)" Severity="HINT" />
+		<IssueType Id="CSharpWarnings::CS0162"  Enabled="true" Description="CS0162:Code is unreachable&lt;br /&gt;(Category: Compiler Warnings)" Severity="HINT" />
     </IssueTypes>
 </Report>
