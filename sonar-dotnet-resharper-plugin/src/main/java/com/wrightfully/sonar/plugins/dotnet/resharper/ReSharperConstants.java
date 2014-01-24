@@ -24,7 +24,8 @@ package com.wrightfully.sonar.plugins.dotnet.resharper;
  */
 public final class ReSharperConstants {
 
-    private ReSharperConstants() {
+
+  private ReSharperConstants() {
     }
 
     public static final String REPOSITORY_KEY = "resharper";
@@ -40,6 +41,8 @@ public final class ReSharperConstants {
 
     public static final String INSTALL_DIR_KEY = "sonar.resharper.installDirectory";
     public static final String INSTALL_DIR_DEFVALUE = "C:/jetbrains-commandline-tools";
+
+    public static final String DOTSETTINGS_FILE_PATH = "sonar.resharper.dotSettings.path";
 
     public static final String TIMEOUT_MINUTES_KEY = "sonar.resharper.timeoutMinutes";
     public static final int TIMEOUT_MINUTES_DEFVALUE = 20;

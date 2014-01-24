@@ -20,6 +20,10 @@
 package com.wrightfully.sonar.plugins.dotnet.resharper;
 
 import com.google.common.base.Joiner;
+import com.wrightfully.sonar.dotnet.tools.resharper.ReSharperCommandBuilder;
+import com.wrightfully.sonar.dotnet.tools.resharper.ReSharperException;
+import com.wrightfully.sonar.dotnet.tools.resharper.ReSharperRunner;
+import com.wrightfully.sonar.plugins.dotnet.resharper.profiles.ReSharperProfileExporter;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,11 +33,6 @@ import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.Project;
 import org.sonar.api.resources.ProjectFileSystem;
 import org.sonar.api.utils.SonarException;
-import com.wrightfully.sonar.dotnet.tools.resharper.ReSharperCommandBuilder;
-import com.wrightfully.sonar.dotnet.tools.resharper.ReSharperException;
-import com.wrightfully.sonar.dotnet.tools.resharper.ReSharperRunner;
-import com.wrightfully.sonar.plugins.dotnet.resharper.profiles.ReSharperProfileExporter;
-import com.wrightfully.sonar.plugins.dotnet.resharper.ReSharperConfiguration;
 import org.sonar.plugins.dotnet.api.DotNetConfiguration;
 import org.sonar.plugins.dotnet.api.DotNetConstants;
 import org.sonar.plugins.dotnet.api.microsoft.MicrosoftWindowsEnvironment;
@@ -155,6 +154,7 @@ public abstract class ReSharperSensor extends AbstractRuleBasedDotNetSensor {
         VisualStudioProject vsProject = getVSProject(project);
         ReSharperCommandBuilder builder = runner.createCommandBuilder(vsSolution, vsProject);
         builder.setReportFile(new File(fileSystem.getSonarWorkingDirectory(), ReSharperConstants.REPORT_FILENAME));
+        builder.setDotSettingsFilePath(resharperConfiguration.getString(ReSharperConstants.DOTSETTINGS_FILE_PATH));
         int timeout = resharperConfiguration.getInt(ReSharperConstants.TIMEOUT_MINUTES_KEY);
         runner.execute(builder, timeout);
     }

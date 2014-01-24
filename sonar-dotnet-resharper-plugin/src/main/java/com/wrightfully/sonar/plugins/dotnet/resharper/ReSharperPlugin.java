@@ -19,13 +19,12 @@
  */
 package com.wrightfully.sonar.plugins.dotnet.resharper;
 
-import org.sonar.api.*;
 import com.wrightfully.sonar.plugins.dotnet.resharper.profiles.ReSharperProfileExporter;
 import com.wrightfully.sonar.plugins.dotnet.resharper.profiles.ReSharperProfileImporter;
 import com.wrightfully.sonar.plugins.dotnet.resharper.profiles.ReSharperSonarWayProfileCSharp;
 import com.wrightfully.sonar.plugins.dotnet.resharper.profiles.ReSharperSonarWayProfileVbNet;
+import org.sonar.api.*;
 import org.sonar.plugins.dotnet.api.sensor.AbstractDotNetSensor;
-import com.wrightfully.sonar.plugins.dotnet.resharper.ReSharperConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +41,8 @@ import java.util.List;
                         + "This can be an absolute path, or a path relative to each project base directory.", global = false, project = false),
         @Property(key = ReSharperConstants.INSTALL_DIR_KEY, defaultValue = ReSharperConstants.INSTALL_DIR_DEFVALUE, name = "ReSharper Command Line Tools install directory",
                 description = "Absolute path of the ReSharper Command Line Tools installation folder.", global = true, project = false),
+        @Property(key = ReSharperConstants.DOTSETTINGS_FILE_PATH, defaultValue = "", name = "ReSharper dotSettings file",
+                description = "Absolute path of the ReSharper dotSettings file to use during in-process analysis.", global = false, project = false),
         @Property(key = ReSharperConstants.TIMEOUT_MINUTES_KEY, defaultValue = ReSharperConstants.TIMEOUT_MINUTES_DEFVALUE + "",
                 name = "ReSharper program timeout", description = "Maximum number of minutes before the ReSharper program will be stopped.", global = true,
                 project = true, type = PropertyType.INTEGER),

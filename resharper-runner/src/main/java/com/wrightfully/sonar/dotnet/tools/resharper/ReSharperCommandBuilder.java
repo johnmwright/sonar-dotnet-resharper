@@ -19,13 +19,17 @@
  */
 package com.wrightfully.sonar.dotnet.tools.resharper;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonar.api.utils.SonarException;
 import org.sonar.api.utils.command.Command;
 import org.sonar.plugins.dotnet.api.microsoft.VisualStudioProject;
 import org.sonar.plugins.dotnet.api.microsoft.VisualStudioSolution;
+import org.sonar.plugins.dotnet.api.utils.FileFinder;
 
 import java.io.File;
+import java.util.Collection;
 
 /**
  * Class used to build the command line to run ReSharper inspectcoe.
@@ -34,11 +38,12 @@ public final class ReSharperCommandBuilder {
 
   private static final Logger LOG = LoggerFactory.getLogger(ReSharperCommandBuilder.class);
 
-    private File resharperReportFile;
-    protected File executable;
+  private File resharperReportFile;
+  protected File executable;
 
-    private VisualStudioSolution solution;
-    private VisualStudioProject vsProject;
+  private VisualStudioSolution solution;
+  private VisualStudioProject vsProject;
+  private String dotSettingsFilePath;
 
   private ReSharperCommandBuilder() {
   }
@@ -70,6 +75,11 @@ public final class ReSharperCommandBuilder {
     public ReSharperCommandBuilder setReportFile(File reportFile) {
         this.resharperReportFile = reportFile;
         return this;
+    }
+
+    public ReSharperCommandBuilder setDotSettingsFilePath(String settingsFile) {
+      this.dotSettingsFilePath = settingsFile;
+      return this;
     }
 
     /**
@@ -113,6 +123,26 @@ public final class ReSharperCommandBuilder {
 
     LOG.debug("- Project name              : " + vsProject.getName());
     command.addArgument("/project=" + vsProject.getName());
+
+    boolean settingsFileFound = false;
+    if (dotSettingsFilePath != null && !StringUtils.isEmpty(dotSettingsFilePath)) {
+
+      Collection<File> settingsFiles = FileFinder.findFiles(solution, vsProject, dotSettingsFilePath);
+      if (settingsFiles.size() > 1) {
+        throw new SonarException("More than one file matched the pattern for the ReSharper dotSettings file path");
+      }
+
+      if (settingsFiles.size() == 1) {
+        File settingsFile = (File)settingsFiles.toArray()[0];
+        settingsFileFound = true;
+        LOG.debug("- DotSettings file          : " + dotSettingsFilePath);
+        command.addArgument("/profile=" + settingsFile.getAbsolutePath());
+      }
+    }
+
+    if (!settingsFileFound) {
+      LOG.debug("- DotSettings file          : <not set> ");
+    }
 
     LOG.debug("- Report file               : " + resharperReportFile);
     command.addArgument("/output=" + resharperReportFile.getAbsolutePath());

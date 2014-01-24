@@ -82,7 +82,7 @@ public final class ReSharperRunner {
   public void execute(ReSharperCommandBuilder resharperCommandBuilder, int timeoutMinutes) throws ReSharperException {
     LOG.debug("Executing ReSharper program...");
     int exitCode = CommandExecutor.create().execute(resharperCommandBuilder.toCommand(), timeoutMinutes * MINUTES_TO_MILLISECONDS);
-    if (exitCode != 0 ) { //&& exitCode != 512) { -- Why 512? Magic numbers are evil
+    if (exitCode != 0 ) {
       throw new ReSharperException("ReSharper execution failed with return code '" + exitCode
         + "'. Check ReSharper documentation for more information.");
     }
