@@ -43,6 +43,8 @@ import java.util.List;
                 description = "Absolute path of the ReSharper Command Line Tools installation folder.", global = true, project = false),
         @Property(key = ReSharperConstants.DOTSETTINGS_FILE_PATH, defaultValue = "", name = "ReSharper dotSettings file",
                 description = "Absolute path of the ReSharper dotSettings file to use during in-process analysis.", global = false, project = false),
+        @Property(key = ReSharperConstants.ADDITIONAL_CMD_ARGS, defaultValue = "", name = "Additional ReSharper commandline arguments",
+                description = "Additional commandline arguments to use during in-process analysis.", global = false, project = false),
         @Property(key = ReSharperConstants.TIMEOUT_MINUTES_KEY, defaultValue = ReSharperConstants.TIMEOUT_MINUTES_DEFVALUE + "",
                 name = "ReSharper program timeout", description = "Maximum number of minutes before the ReSharper program will be stopped.", global = true,
                 project = true, type = PropertyType.INTEGER),

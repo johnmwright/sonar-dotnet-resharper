@@ -155,6 +155,7 @@ public abstract class ReSharperSensor extends AbstractRuleBasedDotNetSensor {
         ReSharperCommandBuilder builder = runner.createCommandBuilder(vsSolution, vsProject);
         builder.setReportFile(new File(fileSystem.getSonarWorkingDirectory(), ReSharperConstants.REPORT_FILENAME));
         builder.setDotSettingsFilePath(resharperConfiguration.getString(ReSharperConstants.DOTSETTINGS_FILE_PATH));
+        builder.setAdditionalParameters(resharperConfiguration.getString(ReSharperConstants.ADDITIONAL_CMD_ARGS));
         int timeout = resharperConfiguration.getInt(ReSharperConstants.TIMEOUT_MINUTES_KEY);
         runner.execute(builder, timeout);
     }

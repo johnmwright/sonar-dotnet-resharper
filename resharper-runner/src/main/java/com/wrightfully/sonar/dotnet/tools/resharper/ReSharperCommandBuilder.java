@@ -44,6 +44,7 @@ public final class ReSharperCommandBuilder {
   private VisualStudioSolution solution;
   private VisualStudioProject vsProject;
   private String dotSettingsFilePath;
+  private String cmdArgs;
 
   private ReSharperCommandBuilder() {
   }
@@ -93,6 +94,16 @@ public final class ReSharperCommandBuilder {
         this.executable = executable;
     }
 
+  /**
+   * Additional parameters to add to the inspectcode command line
+   *
+   * @param cmdArgs
+   */
+    public void setAdditionalParameters(String cmdArgs) {
+      this.cmdArgs = cmdArgs;
+    }
+
+
     /**
    * Transforms this command object into a array of string that can be passed to the CommandExecutor.
    *
@@ -100,23 +111,29 @@ public final class ReSharperCommandBuilder {
    */
   public Command toCommand() throws ReSharperException {
 
-//      $> c:\ThirdPartyTools\jb-commandline-8.0.0.39\inspectcode.exe /help
-//      InspectCode for .NET
-//      Running in 32-bit mode, .NET runtime 4.0.30319.18051 under Microsoft Windows NT 6.2.9200.0
-//      Usage: InspectCode [options] SolutionFile
+//    $> c:\ThirdPartyTools\jb-commandline-8.1.23.523\inspectcode.exe /help
+//    InspectCode 8.1.23.523
+//    Running in 64-bit mode, .NET runtime 4.0.30319.34003 under Microsoft Windows NT 6.2.9200.0
+//    Usage: InspectCode.exe [options] [project file]
 //
-//      Options:
-//      /output (/o) : Write inspections report to specified file.
-//      /no-swea  : Disable solution-wide analysis (default: False)
-//      /project  : Analyze only projects selected by provided wildcards (default: analyze all solution)
-//      /profile (/p) : Path to the file to use custom settings from (default: Use R#'s solution shared settings if exists)
-//      /no-buildin-settings  : Supress solution shared settings profile usage (default: False)
-//      /caches-home  : Path to the directory where produced cashes will be stored.
-//      /debug (/d) : Show debugging messages (default: False)
-//      /help (/h) : Show help and exit
-//      /version (/v) : Show tool version and exit
-//      /dumpPlatforms (/dpl) : Dump platforms description to file and exit
-//      /dumpProject (/dpm) : Dump project model description to file and exit
+//    Options:
+//        /config : Path to configuration file where parameters are specified (use 'config-create' option to create sample file).
+//        /config-create : Write command line parametrs to specified file.
+//        /output (/o) : Write inspections report to specified file.
+//        /no-swea : Disable solution-wide analysis (default: False).
+//        /project : Analyze only projects selected by provided wildcards (default: analyze all solution).
+//        /profile (/p) : Path to the file to use custom settings from (default: Use R#'s solution shared settings if exists).
+//        /no-buildin-settings : Supress solution shared settings profile usage (default: False).
+//        /caches-home : Path to the directory where produced cashes will be stored.
+//        /debug (/d) : Show debugging messages (default: False).
+//        /help (/h) : Show help and exit.
+//        /version (/v) : Show tool version and exit.
+//        /eXtensions (/x) : Install and use specified extensions.
+//        /properties : MSBuild properties.
+//        /dumpIssuesTypes (/it) : Dump issues types (default: False).
+//
+//    Example:
+//        InspectCode.exe /caches-home="C:\Temp\DFCache" /o="report.xml" "C:\src\MySolution.sln"
 
     LOG.debug("- ReSharper program         : " + executable);
     Command command = Command.create(executable.getAbsolutePath());
@@ -147,7 +164,15 @@ public final class ReSharperCommandBuilder {
     LOG.debug("- Report file               : " + resharperReportFile);
     command.addArgument("/output=" + resharperReportFile.getAbsolutePath());
 
-    LOG.debug("- Solution file               : " + solution);
+    if (StringUtils.isEmpty(cmdArgs))
+    {
+      LOG.debug("- Additional Parameters     : <not set>" );
+    } else {
+      LOG.debug("- Additional Parameters     : " + cmdArgs );
+      command.addArgument(cmdArgs);
+    }
+
+    LOG.debug("- Solution file              : " + solution);
     command.addArgument(solution.getSolutionFile().getAbsolutePath());
 
     return command;
