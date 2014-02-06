@@ -13,7 +13,7 @@
   <groupId>org.codehaus.sonar-plugins</groupId>
   <artifactId>sonar-dotnet-resharper</artifactId>
   <packaging>pom</packaging>
-  <version>1.1</version>
+  <version>1.1-SNAPSHOT</version>
 
   <name>Sonar .NET ReSharper</name>
   <inceptionYear>2013</inceptionYear>
@@ -40,7 +40,7 @@
     <connection>scm:git:git@github.com:SonarCommunity/sonar-dotnet-resharper.git</connection>
     <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-dotnet-resharper.git</developerConnection>
     <url>https://github.com/SonarCommunity/sonar-dotnet-resharper</url>
-    <tag>1.1</tag>
+    <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>JIRA</system>
