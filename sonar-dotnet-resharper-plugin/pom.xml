@@ -13,6 +13,7 @@
 
   <name>Sonar .NET Plugin :: ReSharper</name>
   <description>Plugin to utilize JetBrain's ReSharper command-line code analyzer to check .NET source code against rule violations.</description>
+  <url>http://docs.codehaus.org/display/SONAR/.NET+ReSharper</url>
 
   <properties>
     <license.owner>John M. Wright</license.owner>
