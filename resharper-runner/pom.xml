@@ -6,14 +6,14 @@
         <dependency>
             <groupId>org.codehaus.sonar-plugins.dotnet</groupId>
             <artifactId>sonar-dotnet-plugin</artifactId>
-            <version>2.2-SNAPSHOT</version>
+            <version>2.1</version>
         </dependency>
     </dependencies>
 
     <parent>
     <groupId>org.codehaus.sonar-plugins</groupId>
     <artifactId>sonar-dotnet-resharper</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <relativePath>..</relativePath>
   </parent>
 
