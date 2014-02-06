@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.codehaus.sonar-plugins</groupId>
     <artifactId>sonar-dotnet-resharper</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
   </parent>
 
   <groupId>org.codehaus.sonar-plugins</groupId>
@@ -58,7 +58,7 @@
                 <configuration>
                   <rules>
                     <requireFilesSize>
-                      <maxsize>2200000</maxsize>
+                      <maxsize>60000</maxsize>
                       <minsize>2000000</minsize>
                       <files>
                         <file>${project.build.directory}/SonarReSharperPlugin-${project.version}.zip</file>
