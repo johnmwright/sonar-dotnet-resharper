@@ -58,8 +58,8 @@
                 <configuration>
                   <rules>
                     <requireFilesSize>
-                      <maxsize>60000</maxsize>
-                      <minsize>2000000</minsize>
+                      <maxsize>2000000</maxsize>
+                      <minsize>60000</minsize>
                       <files>
                         <file>${project.build.directory}/SonarReSharperPlugin-${project.version}.zip</file>
                       </files>
